@@ -1,0 +1,14 @@
+---
+- name: Setup Nginx server
+  hosts: all
+  become: yes
+
+  tasks:
+  - name: Ensure System Updated
+    apt:
+      update_cache: yes
+
+  - name: Ensure Nginx present
+    apt:
+      name: nginx
+      state: present

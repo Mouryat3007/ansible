@@ -1,0 +1,48 @@
+
+To configure
+
+> sudo vi /etc/ansible/host
+
+add the config as shown below
+
+n1 ansible_host=172.31.14.104 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/mouryat.pem
+n2 ansible_host=172.31.7.226 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/mouryat.pem
+n3 ansible_host=172.31.3.68 ansible_user=ec2-user ansible_ssh_private_key_file=/home/ubuntu/mouryat.pem
+n4 ansible_host=172.31.10.120 ansible_user=ec2-user ansible_ssh_private_key_file=/home/ubuntu/mouryat.pem
+
+[g1]
+
+n1 ansible_host=172.31.14.104 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/mouryat.pem
+n2 ansible_host=172.31.7.226 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/mouryat.pem
+
+[g2]
+
+n3 ansible_host=172.31.3.68 ansible_user=ec2-user ansible_ssh_private_key_file=/home/ubuntu/mouryat.pem
+n4 ansible_host=172.31.10.120 ansible_user=ec2-user ansible_ssh_private_key_file=/home/ubuntu/mouryat.pem
+
+[g3]
+
+n1 ansible_host=172.31.14.104 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/mouryat.pem
+n3 ansible_host=172.31.3.68 ansible_user=ec2-user ansible_ssh_private_key_file=/home/ubuntu/mouryat.pem
+
+adhoc commands
+
+ansible [pattern] -m [module] -a "[module options]"
+
+Example
+>  ansible g1 -m file -a "path=/home/ubuntu/test state=directory"
+>  ansible g2 -m file -a "path=/home/ec2-user/test state=directory"
+>  ansible all -m apt -a "name=zip state=present" -b
+
+g1 , g2 and all are the hosts
+-a is the argument
+-b become is like sudo
+-m is the module
+
+to run adhoc commands use the above command
+
+Playbook
+
+ansible-playbook <playbookname>
+
+to run a playbook create a playbook and run using the above command

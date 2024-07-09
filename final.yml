@@ -1,0 +1,48 @@
+---
+- name: Setup ecomm app
+  hosts: all
+  become: yes
+
+  tasks:
+  - name: Ensure nginx is installed
+    apt:
+      name: nginx
+      state: present
+    when: ansible_distribution == "Ubuntu"
+  
+  - name: Ensure file is deleted
+    file:
+      state: absent
+      path: /var/www/html/index.nginx-debian.html
+    when: ansible_distribution == "Ubuntu"    
+
+  - name: Ensure git is installed
+    apt:
+      name: git
+      state: present
+    when: ansible_distribution == "Ubuntu"    
+
+  - name: Ensure httpd installed
+    yum:
+      name: httpd
+      state: present
+    when: ansible_distribution == "Amazon"    
+        
+  - name: start httpd
+    service:
+      name: httpd
+      state: started
+    when: ansible_distribution == "Amazon"     
+
+  - name: Enable httpd 
+    service:
+      name: httpd
+      state: started
+    when: ansible_distribution == "Amazon"
+
+  - name: deploy app
+    git:
+      repo: https://github.com/Mouryat3007/Ecomm.git
+      dest: /var/www/html
+
+

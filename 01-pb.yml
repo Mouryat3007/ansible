@@ -1,0 +1,10 @@
+---
+- name: Update all server
+  hosts: all
+
+  tasks:
+  - name: Ensure directory created
+    file:
+      path: /home/ubuntu/testdir
+      state: directory
+        

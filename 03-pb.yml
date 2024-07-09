@@ -1,0 +1,14 @@
+---
+- name: Setup http server
+  hosts: all
+  become: yes
+
+  tasks:
+  - name: Ensure System Updated
+    yum:
+      update_cache: yes
+
+  - name: Ensure http present
+    yum:
+      name: httpd
+      state: present

@@ -1,0 +1,15 @@
+---
+- name: Setup git
+  hosts: all
+  become: yes
+
+  tasks:
+  - name: Ensure git is installed
+    yum:
+      name: git
+      state: present
+
+  - name: Ensure git is installed
+    apt:
+      name: git
+      state: present  
